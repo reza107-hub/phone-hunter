@@ -30,6 +30,7 @@ const displayPhone = (phones,dataLimit) => {
                   <h5 class="card-title">${phone.
         phone_name}</h5>
                   <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <button onclick="fetchPhoneId('${phone.slug}')" id="show-details-btn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Show details</button>
                 </div>
               </div>
             </div>
@@ -64,4 +65,16 @@ const loadSpinner = isLoading => {
 document.getElementById('show-all-btn').addEventListener('click',function(){
   btnClick()
 })
-// loadPhones('iphone')
+const fetchPhoneId = async (id)=>{
+  const url= `https://openapi.programming-hero.com/api/phone/${id}`
+  const res = await fetch(url)
+  const data = await res.json()
+  loadPhonesId(data.data)
+}
+const loadPhonesId = (data)=>{
+  console.log(data);
+  const title = document.getElementById('exampleModalLabel')
+  title.innerText=data.name
+  
+}
+ loadPhones('apple')
